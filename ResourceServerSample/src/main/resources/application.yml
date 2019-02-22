@@ -1,0 +1,10 @@
+
+server:
+  port: 9882
+
+
+security:
+  signing-key: UgxH7iuGS3yqwLx #https://www.random.org/strings/
+  jwt:
+    rs-resource-id: defaultjwtresourceid
+

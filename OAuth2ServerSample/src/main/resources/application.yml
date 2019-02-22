@@ -1,0 +1,52 @@
+
+server:
+  port: 9887
+
+security:
+  signing-key: UgxH7iuGS3yqwLx #https://www.random.org/strings/
+  security-realm: Sample Default Realm
+
+  jwt:
+    client-id: default_oauth2_client_id
+    client-secret: $2a$10$7HtgLVjf22phCokcjLZh9.1T5alyIjEv3RYFucbgvfkoaKUkKTgmC  #[hashed with BCCrypt]-> QWERTY74gray75raccoon634
+    grant-type: password,refresh_token
+    scope-read: read
+    scope-write: write
+    local-resource-id: localjwtresourceid
+    rs-resource-id: defaultjwtresourceid
+    resource-ids: ${security.jwt.local-resource-id},${security.jwt.rs-resource-id}
+
+spring:
+
+  jpa:
+    database: default
+    hibernate:
+      ddl-auto: validate
+
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
+  datasource:
+    postgres:
+      driver-class-name: org.postgresql.Driver
+      jdbc-url: jdbc:postgresql://localhost:15432/postgres
+      username: postgres
+      password: rootroot
+
+      initial-size: 1
+      max-active: 10
+      max-idle: 10
+      test-on-borrow: true
+      validation-query: SELECT 1
+      time-between-eviction-runs-millis: 30000
+      max-wait: 10000
+      min-evictable-idle-time-millis: 30000
+      log-abandoned: true
+      test-while-idle: true
+      validation-interval: 300000
+      jdbc-interceptors: org.apache.tomcat.jdbc.pool.interceptor.SlowQueryReport(threshold=10000)
+
+
