@@ -1,9 +1,9 @@
 package com.grayraccoon.OAuth2ServerSample.ws;
 
+import com.grayraccoon.OAuth2ServerSample.data.postgres.domain.Users;
 import com.grayraccoon.OAuth2ServerSample.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
@@ -37,6 +37,14 @@ public class UsersWebService {
 
         String userId = (String) extraInfo.get("userId");
         return String.format("Authenticated Hello %s -> %s !", userId, authentication.getName());
+    }
+
+    @GetMapping("/authenticated/getMe")
+    public Users authenticatedGetMe(OAuth2Authentication authentication) {
+        Map<String,Object> extraInfo = getExtraInfo(authentication);
+        String userId = (String) extraInfo.get("userId");
+        
+        return userService.findUserById(userId);
     }
 
 

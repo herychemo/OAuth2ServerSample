@@ -67,6 +67,7 @@ public class Users implements Serializable {
     @NotNull
     @Size(min = 1, max = 60)
     @Column(nullable = false, length = 60)
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private String password;
 
 

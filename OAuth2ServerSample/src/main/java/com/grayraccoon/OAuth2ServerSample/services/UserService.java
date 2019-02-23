@@ -7,8 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -17,6 +18,13 @@ public class UserService {
     @Autowired
     UsersRepository usersRepository;
 
+
+    public Users findUserById(String userId) {
+        return this.findUserById(UUID.fromString(userId));
+    }
+    public Users findUserById(UUID userId) {
+        return usersRepository.getOne(userId);
+    }
 
     public Users findByUsernameOrEmail(String query) {
         Users u;
@@ -31,6 +39,8 @@ public class UserService {
         */
         return u;
     }
+
+
 
     @Transactional(readOnly = true)
     public List<Roles> getRolesFor(UUID user_id) {
