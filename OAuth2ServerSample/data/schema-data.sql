@@ -63,8 +63,9 @@ INSERT INTO samples.users
   (user_id, active, email, username, name, last_name, password)
   VALUES ('01e3d8d5-1119-4111-b3d0-be6562ca5913', true, 'admin@admin.com',
           'admin', 'Some User', 'Admin Admin',
-          '$2a$10$oeydcY6qusmu1/1kBoxZ4epbv5H3OY/uYgfFsT/OtFQDSt3kAdyeW' -- https://www.browserling.com/tools/bcrypt
-            );
+           -- https://www.browserling.com/tools/bcrypt
+           /*Hashed with BCCrypt 8 Rounds: some1234password*/
+          '$2a$08$zxyGvP1rz9l5WYJtcLWOjeIr8Mb.COGNrCU31r8EfTogHZXWldi3a');
 
 INSERT INTO samples.user_role VALUES ('01e3d8d5-1119-4111-b3d0-be6562ca5913', 1);
 INSERT INTO samples.user_role VALUES ('01e3d8d5-1119-4111-b3d0-be6562ca5913', 2);

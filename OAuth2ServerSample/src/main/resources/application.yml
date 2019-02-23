@@ -5,16 +5,8 @@ server:
 security:
   signing-key: UgxH7iuGS3yqwLx #https://www.random.org/strings/
   security-realm: Sample Default Realm
-
   jwt:
-    client-id: default_oauth2_client_id
-    client-secret: $2a$10$7HtgLVjf22phCokcjLZh9.1T5alyIjEv3RYFucbgvfkoaKUkKTgmC  #[hashed with BCCrypt]-> QWERTY74gray75raccoon634
-    grant-type: password,refresh_token
-    scope-read: read
-    scope-write: write
     local-resource-id: localjwtresourceid
-    rs-resource-id: defaultjwtresourceid
-    resource-ids: ${security.jwt.local-resource-id},${security.jwt.rs-resource-id}
 
 spring:
 

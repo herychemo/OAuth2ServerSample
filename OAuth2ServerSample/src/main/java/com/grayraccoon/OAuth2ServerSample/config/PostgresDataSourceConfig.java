@@ -21,8 +21,8 @@ import java.util.Map;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        entityManagerFactoryRef =  "entityManagerFactory",
-        transactionManagerRef = "transactionManager",
+        entityManagerFactoryRef =  "postgresEntityManagerFactory",
+        transactionManagerRef = "postgresTransactionManager",
         basePackages = { "com.grayraccoon.OAuth2ServerSample.data.postgres.repository" }    // Repository Package
 )
 public class PostgresDataSourceConfig {
@@ -34,7 +34,7 @@ public class PostgresDataSourceConfig {
      * @return javax.sql.DataSource
      */
     @Primary
-    @Bean("dataSource")
+    @Bean("postgresDataSource")
     @ConfigurationProperties(prefix="spring.datasource.postgres")
     public DataSource getDataSource(){
         return DataSourceBuilder.create().build();
@@ -49,10 +49,10 @@ public class PostgresDataSourceConfig {
      * @return org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean
      */
     @Primary
-    @Bean(name = "entityManagerFactory")
+    @Bean(name = "postgresEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(
             EntityManagerFactoryBuilder builder,
-            @Qualifier("dataSource") DataSource dataSource
+            @Qualifier("postgresDataSource") DataSource dataSource
     ) {
         Map<String, Object> props = new HashMap<>();
         Map<String, Object> jpaProperties = new HashMap<>();
@@ -76,9 +76,9 @@ public class PostgresDataSourceConfig {
      * @return org.springframework.transaction.PlatformTransactionManager
      */
     @Primary
-    @Bean(name = "transactionManager")
+    @Bean(name = "postgresTransactionManager")
     public PlatformTransactionManager transactionManager(
-            @Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory
+            @Qualifier("postgresEntityManagerFactory") EntityManagerFactory entityManagerFactory
     ) {
         return new JpaTransactionManager(entityManagerFactory);
     }

@@ -18,13 +18,14 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+
+import javax.sql.DataSource;
 
 //@EnableJpaRepositories(basePackageClasses = {UsersRepository.class})
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -39,6 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${security.security-realm}")
     private String securityRealm;
 
+    @Autowired
+    private DataSource postgresDataSource;
 
     @Autowired
     private UserService userService;
@@ -95,7 +98,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public TokenStore tokenStore() {
-        return new JwtTokenStore(accessTokenConverter());
+        return new JdbcTokenStore(postgresDataSource);
     }
 
     @Bean
@@ -103,10 +106,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //Making this primary to avoid any accidental duplication with another token service instance of the same name
     public DefaultTokenServices tokenServices() {
         DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
+
+        defaultTokenServices.setTokenEnhancer(accessTokenConverter());
         defaultTokenServices.setTokenStore(tokenStore());
+
         defaultTokenServices.setSupportRefreshToken(true);
         return defaultTokenServices;
     }
+
 
     @Bean
     public TokenEnhancer tokenEnhancer() {
