@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -47,6 +48,10 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
     private CustomUserDetailsService userDetailsService;
 
     @Autowired
+    private PasswordEncoder oauthClientPasswordEncoder;
+
+
+    @Autowired
     private JwtAccessTokenConverter accessTokenConverter;
 
     @Autowired
@@ -58,9 +63,11 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
-        //oauthServer.tokenKeyAccess("permitAll()")
-        //        .checkTokenAccess("isAuthenticated()");
+        oauthServer.tokenKeyAccess("permitAll()")
+                .checkTokenAccess("isAuthenticated()")
+                .passwordEncoder(oauthClientPasswordEncoder);
     }
+
 
     @Override
     public void configure(ClientDetailsServiceConfigurer configurer) throws Exception {
@@ -79,7 +86,6 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
         TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
 
         tokenEnhancerChain.setTokenEnhancers(Arrays.asList(tokenEnhancer, accessTokenConverter));
-
 
         endpoints.tokenStore(tokenStore)
                 .accessTokenConverter(accessTokenConverter)

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
-import static com.grayraccoon.OAuth2ServerSample.config.LocalResourceServer.getExtraInfo;
+import static com.grayraccoon.OAuth2ServerSample.config.LocalResourceServerConfig.getExtraInfo;
 
 @RestController
 @RequestMapping("/ws")

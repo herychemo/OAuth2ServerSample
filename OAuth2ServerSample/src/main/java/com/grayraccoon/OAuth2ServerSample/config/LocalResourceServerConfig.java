@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Configuration
 @EnableResourceServer
-public class LocalResourceServer extends ResourceServerConfigurerAdapter {
+public class LocalResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Autowired
     private ResourceServerTokenServices tokenServices;
