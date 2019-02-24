@@ -1,5 +1,6 @@
 package com.grayraccoon.OAuth2ServerSample.data.postgres.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -22,6 +23,7 @@ import java.util.UUID;
 })
 @NamedQueries({
         @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u")})
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Users implements Serializable {
 
     private static final long serialVersionUID = 1L;
