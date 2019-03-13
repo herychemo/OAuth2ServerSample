@@ -81,7 +81,6 @@ public class Roles implements Serializable {
         return new EqualsBuilder()
                 .append(roleId, roles.roleId)
                 .append(role, roles.role)
-                .append(usersCollection, roles.usersCollection)
                 .isEquals();
     }
 
@@ -90,7 +89,6 @@ public class Roles implements Serializable {
         return new HashCodeBuilder(17, 37)
                 .append(roleId)
                 .append(role)
-                .append(usersCollection)
                 .toHashCode();
     }
 
@@ -99,7 +97,6 @@ public class Roles implements Serializable {
         return new ToStringBuilder(this)
                 .append("roleId", roleId)
                 .append("role", role)
-                .append("usersCollection", usersCollection)
                 .toString();
     }
 }

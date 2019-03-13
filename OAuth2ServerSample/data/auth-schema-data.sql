@@ -22,7 +22,7 @@ INSERT INTO oauth_client_details
            /*Hashed with BCCrypt 4 Rounds: QWERTY74gray75raccoon634*/
           '$2a$10$7HtgLVjf22phCokcjLZh9.1T5alyIjEv3RYFucbgvfkoaKUkKTgmC',
           'read,write', 'password,authorization_code,refresh_token,client_credentials',
-          null, null, 36000, 360000, null, true);
+          'http://localhost:9880/login/oauth2/code/custom-client', null, 36000, 360000, null, true);
 
 drop table if exists oauth_client_token;
 create table oauth_client_token (

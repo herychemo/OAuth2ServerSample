@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.Map;
 
 @RestController
@@ -43,7 +44,6 @@ public class UsersWebService {
     public Users authenticatedGetMe(OAuth2Authentication authentication) {
         Map<String,Object> extraInfo = getExtraInfo(authentication);
         String userId = (String) extraInfo.get("userId");
-        
         return userService.findUserById(userId);
     }
 
